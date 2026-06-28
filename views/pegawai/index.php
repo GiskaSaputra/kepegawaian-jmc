@@ -16,8 +16,14 @@ $roleId = Yii::$app->user->identity->id_role;
     </div>
 
     <?php if ($roleId == 3): ?>
-    <div class="col-auto ms-auto text-end">
-        <a href="<?= Url::to(['pegawai/tambah']) ?>" class="btn btn-danger d-none d-sm-inline-block">
+    <div class="col-auto ms-auto text-end d-flex gap-2">
+        <button onclick="exportExcel()" class="btn btn-success d-none d-sm-inline-block shadow-sm">
+            <i class="bi bi-file-earmark-excel"></i> Export Excel
+        </button>
+        <button onclick="exportBulkPDF()" class="btn btn-danger d-none d-sm-inline-block shadow-sm">
+            <i class="bi bi-file-earmark-pdf"></i> Export PDF
+        </button>
+        <a href="<?= Url::to(['pegawai/tambah']) ?>" class="btn btn-primary d-none d-sm-inline-block shadow-sm">
             <i class="bi bi-plus"></i> Tambah Data
         </a>
     </div>
@@ -26,7 +32,6 @@ $roleId = Yii::$app->user->identity->id_role;
 
 <div class="container-xl p-0">
     <div class="card shadow-sm border-0">
-
         <div class="card-header border-bottom-0 pt-4 pb-3">
             <div class="d-flex w-100 justify-content-between align-items-center">
 
@@ -91,30 +96,30 @@ $roleId = Yii::$app->user->identity->id_role;
                 <li class="page-item disabled"><a class="page-link" href="#" tabindex="-1">prev</a></li>
                 <li class="page-item active"><a class="page-link" href="#">1</a></li>
                 <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item"><a class="page-link" href="#">4</a></li>
-                <li class="page-item"><a class="page-link" href="#">5</a></li>
                 <li class="page-item"><a class="page-link" href="#">next <i class="bi bi-chevron-right ms-1"></i></a></li>
             </ul>
         </div>
     </div>
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
+
 <script>
 let allPegawaiData = [];
+let currentFilteredData = []; // Menyimpan data yang sedang tampil untuk diexport
 const userRoleId = <?= $roleId ?>;
 
 document.addEventListener("DOMContentLoaded", function() {
     fetchDataPegawai();
 
-    // Event Listener Filter Dinamis
     document.getElementById('filter-min').addEventListener('input', applyFilters);
     document.getElementById('filter-max').addEventListener('input', applyFilters);
     document.getElementById('filter-jabatan').addEventListener('change', applyFilters);
     document.getElementById('filter-kontrak').addEventListener('change', applyFilters);
     document.getElementById('filter-search').addEventListener('keyup', applyFilters);
 
-    // Event Listener Bulk Checkbox
     document.getElementById('check-all').addEventListener('change', function() {
         const checkboxes = document.querySelectorAll('.check-item');
         checkboxes.forEach(cb => cb.checked = this.checked);
@@ -127,7 +132,6 @@ function toggleBulkAction() {
     const bulkContainer = document.getElementById('bulk-action-container');
     const filterContainer = document.getElementById('filter-container');
 
-    // Tampilkan tombol ubah status dan sembunyikan filter jika ada baris yang dicentang
     if (checkedCount > 0) {
         bulkContainer.classList.remove('d-none');
         filterContainer.classList.add('d-none');
@@ -155,6 +159,8 @@ function fetchDataPegawai() {
     .then(res => {
         if(res.status === 'success') {
             allPegawaiData = res.data;
+            currentFilteredData = res.data; // Set awal data untuk export
+
             document.getElementById('count-info').innerText = `Menampilkan ${allPegawaiData.length} dari ${allPegawaiData.length} data`;
 
             const jabatanSelect = document.getElementById('filter-jabatan');
@@ -170,17 +176,15 @@ function fetchDataPegawai() {
     })
     .catch(error => {
         console.error('Error fetching data:', error);
-        showError('Gagal mengambil data dari API (Periksa Server/Token JWT Anda).');
+        showError('Gagal mengambil data dari API.');
     });
 }
 
-// FUNGSI RENDER TABEL
 function renderTable(dataArray) {
     const tbody = document.getElementById('table-pegawai-body');
     tbody.innerHTML = '';
     document.getElementById('count-info').innerText = `Menampilkan ${dataArray.length} dari ${allPegawaiData.length} data`;
 
-    // Reset Checkbox saat tabel dirender ulang
     document.getElementById('check-all').checked = false;
     toggleBulkAction();
 
@@ -192,17 +196,17 @@ function renderTable(dataArray) {
     dataArray.forEach((item, index) => {
         const tglMasuk = new Date(item.tanggal_masuk);
         const masaKerjaAngka = new Date().getFullYear() - tglMasuk.getFullYear();
-        const masaKerja = masaKerjaAngka + ' tahun'; // Format prototipe huruf kecil
+        const masaKerja = masaKerjaAngka + ' tahun';
         const namaJabatan = item.jabatan ? item.jabatan.nama : '-';
 
-        // IKON AKSI SESUAI PROTOTIPE (Tanpa Border Button)
-        // Ikon Read & Download bisa diakses Manager & Admin
+        // URL dengan autoPrint=true untuk ikon unduh kecil
+        const urlPrintDetail = `<?= Url::to(['pegawai/detail']) ?>?id=${item.id}&autoPrint=true`;
+
         let actionButtons = `
             <a href="<?= Url::to(['pegawai/detail']) ?>?id=${item.id}" class="text-muted text-decoration-none mx-1" title="Detail"><i class="bi bi-file-earmark-text fs-5"></i></a>
-            <a href="<?= Url::to(['pegawai/detail']) ?>?id=${item.id}" class="text-muted text-decoration-none mx-1" title="Download PDF"><i class="bi bi-cloud-download fs-5"></i></a>
+            <a href="${urlPrintDetail}" target="_blank" class="text-muted text-decoration-none mx-1" title="Download PDF"><i class="bi bi-cloud-download fs-5"></i></a>
         `;
 
-        // HANYA Admin HRD (Role 3) yang akan ditambahkan Ikon Edit & Hapus
         if (userRoleId === 3) {
             actionButtons = `
                 <a href="<?= Url::to(['pegawai/tambah']) ?>?id=${item.id}" class="text-muted text-decoration-none mx-1" title="Edit"><i class="bi bi-pencil fs-5"></i></a>
@@ -237,7 +241,7 @@ function applyFilters() {
     const kontrak = document.getElementById('filter-kontrak').value.toLowerCase();
     const search = document.getElementById('filter-search').value.toLowerCase();
 
-    const filteredData = allPegawaiData.filter(item => {
+    currentFilteredData = allPegawaiData.filter(item => {
         const tglMasuk = new Date(item.tanggal_masuk);
         const masaKerja = new Date().getFullYear() - tglMasuk.getFullYear();
 
@@ -254,7 +258,7 @@ function applyFilters() {
         return matchMin && matchMax && matchJabatan && matchKontrak && matchSearch;
     });
 
-    renderTable(filteredData);
+    renderTable(currentFilteredData);
 }
 
 function deletePegawai(id) {
@@ -279,5 +283,62 @@ function deletePegawai(id) {
 
 function showError(msg) {
     document.getElementById('table-pegawai-body').innerHTML = `<tr><td colspan="8" class="text-center text-danger py-4">${msg}</td></tr>`;
+}
+
+// --- FUNGSI EXPORT EXCEL ---
+function exportExcel() {
+    if (currentFilteredData.length === 0) return alert("Tidak ada data untuk diexport!");
+
+    // Mapping data agar kolomnya rapi dan berbahasa Indonesia
+    const dataToExport = currentFilteredData.map((item, index) => ({
+        "No": index + 1,
+        "NIP": item.nip,
+        "Nama Pegawai": item.nama_pegawai,
+        "Jabatan": item.jabatan ? item.jabatan.nama : '-',
+        "Status Kontrak": item.status_kontrak,
+        "Tanggal Masuk": item.tanggal_masuk,
+        "Email": item.email || '-',
+        "Nomor HP": item.nomor_hp || '-'
+    }));
+
+    const worksheet = XLSX.utils.json_to_sheet(dataToExport);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Data Pegawai");
+
+    XLSX.writeFile(workbook, "Data_Pegawai_JMC.xlsx");
+}
+
+// --- FUNGSI EXPORT PDF BULK ---
+function exportBulkPDF() {
+    if (currentFilteredData.length === 0) return alert("Tidak ada data untuk diexport!");
+
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF('p', 'mm', 'a4'); // Kertas A4, posisi Portrait
+
+    // Header PDF
+    doc.setFontSize(16);
+    doc.text("Laporan Data Pegawai JMC", 14, 15);
+    doc.setFontSize(10);
+    doc.text("Dicetak pada: " + new Date().toLocaleDateString('id-ID'), 14, 22);
+
+    // Format Data untuk Tabel jsPDF
+    const tableData = currentFilteredData.map((item, index) => [
+        index + 1,
+        item.nip,
+        item.nama_pegawai,
+        item.jabatan ? item.jabatan.nama : '-',
+        item.tanggal_masuk,
+        item.status_kontrak
+    ]);
+
+    doc.autoTable({
+        startY: 28,
+        head: [['No', 'NIP', 'Nama Lengkap', 'Jabatan', 'Tgl Masuk', 'Status']],
+        body: tableData,
+        theme: 'striped',
+        headStyles: { fillColor: [43, 80, 142] } // Warna biru tua (mirip tema prototipe)
+    });
+
+    doc.save("Laporan_Data_Pegawai_JMC.pdf");
 }
 </script>

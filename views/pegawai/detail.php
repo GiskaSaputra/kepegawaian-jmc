@@ -257,6 +257,11 @@ document.addEventListener("DOMContentLoaded", function() {
                 } else {
                     pendContainer.innerHTML = '<div class="datagrid-content text-muted">Tidak ada riwayat pendidikan.</div>';
                 }
+
+                if (urlParams.get('autoPrint') === 'true') {
+                    setTimeout(() => window.print(), 800); // Jeda 800ms agar foto ter-load sempurna
+                }
+
             } else {
                 alert("Data pegawai tidak ditemukan.");
             }
