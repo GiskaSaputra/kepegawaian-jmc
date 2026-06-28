@@ -94,7 +94,7 @@ $isLog = strpos($route, 'log/') === 0;
                     <div class="offcanvas-header">
                         <div class="d-flex gap-3 align-items-center">
                             <div class="image">
-                                <img src="<?= Url::to('@web/assets/images/logo_jmc.png') ?>" alt="" height="15">
+                                <img src="<?= Url::to('@web/ui-assets/images/logo_jmc.png') ?>" alt="" height="15">
                             </div>
                             <div class="logo-text flex-grow-1">
                                 <div class="fs-4 fw-bold">Aplikasi Kepegawaian</div>
