@@ -133,7 +133,7 @@ $totalStatistik = [
                                         <td><?= Html::encode($item->nip) ?></td>
                                         <td>
                                             <div class="d-flex align-items-center gap-1">
-                                                <img src="<?= $item->foto_pegawai ? Url::to('@web/uploads/'.$item->foto_pegawai) : Url::to('@web/ui-assets/images/pegawai/default.jpg') ?>" alt="" style="width: 32px; height: 32px; object-fit: cover;" class="rounded-pill" />
+                                                <img src="<?= $item->foto_pegawai ? Url::to('@web/uploads/pegawai/'.$item->foto_pegawai) : Url::to('@web/ui-assets/images/pegawai/default.jpg') ?>" alt="" style="width: 32px; height: 32px; object-fit: cover;" class="rounded-pill" />
                                                 <p class="mb-0"><?= Html::encode($item->nama_pegawai) ?></p>
                                             </div>
                                         </td>
@@ -168,7 +168,7 @@ $totalStatistik = [
             if (document.querySelector("#chart-gender-pegawai")) {
                 new ApexCharts(document.querySelector("#chart-gender-pegawai"), {
                     chart: { type: "donut", height: 250 },
-                    series: [70, 30], 
+                    series: [70, 30],
                     labels: ["Laki-laki", "Perempuan"],
                     colors: ["#2B508E", "#FE7E00"],
                     legend: { position: "bottom" },
