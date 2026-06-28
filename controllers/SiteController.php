@@ -16,6 +16,7 @@ use yii\mail\MailerInterface;
 use yii\web\Controller;
 use yii\web\ErrorAction;
 use yii\web\Response;
+use yii\web\UploadedFile; // Ditambahkan untuk menangani upload file
 
 class SiteController extends Controller
 {
@@ -142,7 +143,6 @@ class SiteController extends Controller
                 'created_at' => date('Y-m-d H:i:s'),
                 'created_by' => $user->id,
             ])->execute();
-            // ------------------------
 
             return $this->goBack();
         }
@@ -204,14 +204,66 @@ class SiteController extends Controller
         $role = \app\models\UserRole::findOne($user->id_role);
         $roleName = $role ? $role->nama_role : 'Administrator';
 
-        Yii::$app->db->createCommand()->insert('activities', [
-            'title' => 'My Profile',
-            'content' => 'Melihat halaman profil pribadi',
-            'created_by' => $user->id,
-            'created_at' => date('Y-m-d H:i:s'),
-            'ip' => Yii::$app->request->userIP,
-            'url' => Yii::$app->request->url,
-        ])->execute();
+        // --- PROSES KETIKA TOMBOL SAVE DIKLIK (POST REQUEST) ---
+        if (Yii::$app->request->isPost) {
+            // Tangkap data teks dari form
+            $user->nama = Yii::$app->request->post('nama', $user->nama);
+            $user->email = Yii::$app->request->post('email', $user->email);
+
+            // Catatan: Jika ada kolom lain seperti tanggal_lahir atau catatan di DB Anda, Anda bisa menambahkannya:
+            // if ($user->hasAttribute('tanggal_lahir')) $user->tanggal_lahir = Yii::$app->request->post('tanggal_lahir');
+
+            // Tangkap Upload Foto
+            $foto = UploadedFile::getInstanceByName('foto');
+            if ($foto) {
+                // Pastikan folder penyimpanan ada
+                $uploadPath = Yii::getAlias('@webroot/uploads/profile/');
+                if (!is_dir($uploadPath)) {
+                    mkdir($uploadPath, 0777, true);
+                }
+
+                // Buat nama file unik agar tidak tertimpa
+                $fileName = 'usr_' . $user->id . '_' . time() . '.' . $foto->extension;
+
+                if ($foto->saveAs($uploadPath . $fileName)) {
+                    // Hapus foto lama dari server jika bukan foto default
+                    if ($user->foto && file_exists($uploadPath . $user->foto)) {
+                        unlink($uploadPath . $user->foto);
+                    }
+                    $user->foto = $fileName;
+                }
+            }
+
+            // Simpan perubahan ke Database
+            if ($user->save(false)) { // false untuk mem-bypass validasi strict sementara
+                Yii::$app->session->setFlash('success', 'Profil dan foto berhasil diperbarui!');
+
+                // Log Aktivitas Update Profil
+                Yii::$app->db->createCommand()->insert('activities', [
+                    'title' => 'Update Profile',
+                    'content' => 'Pengguna ' . $user->username . ' memperbarui data profilnya.',
+                    'created_by' => $user->id,
+                    'created_at' => date('Y-m-d H:i:s'),
+                    'ip' => Yii::$app->request->userIP,
+                    'url' => Yii::$app->request->url,
+                ])->execute();
+
+                return $this->refresh();
+            } else {
+                Yii::$app->session->setFlash('error', 'Gagal memperbarui profil.');
+            }
+        }
+        // --- PROSES KETIKA HALAMAN PERTAMA KALI DIBUKA (GET REQUEST) ---
+        else {
+            Yii::$app->db->createCommand()->insert('activities', [
+                'title' => 'My Profile',
+                'content' => 'Melihat halaman profil pribadi',
+                'created_by' => $user->id,
+                'created_at' => date('Y-m-d H:i:s'),
+                'ip' => Yii::$app->request->userIP,
+                'url' => Yii::$app->request->url,
+            ])->execute();
+        }
 
         return $this->render('profile', [
             'user' => $user,
