@@ -39,7 +39,7 @@ $isLog = strpos($route, 'log/') === 0;
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <?php $this->registerCsrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?> | Aplikasi Kepegawaian JMC</title>
-    <link rel="shortcut icon" href="<?= Url::to('@web/assets/images/favicon.png') ?>">
+    <link rel="shortcut icon" href="<?= Url::to('@web/ui-assets/images/favicon.png') ?>">
     <?php $this->head() ?>
 
     <style>
