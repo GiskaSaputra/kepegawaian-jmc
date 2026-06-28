@@ -1,0 +1,79 @@
+openapi: 3.0.0
+info:
+  title: API Aplikasi Kepegawaian & Tunjangan JMC
+  description: Dokumentasi API untuk manajemen data pegawai dan kalkulasi tunjangan transport.
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080/api
+    description: Local Development Server
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+security:
+  - bearerAuth: []
+paths:
+  /pegawai/list:
+    get:
+      summary: Mendapatkan daftar seluruh pegawai
+      tags:
+        - Pegawai
+      responses:
+        '200':
+          description: Berhasil mengambil data
+  /pegawai/create:
+    post:
+      summary: Menambahkan data pegawai baru
+      tags:
+        - Pegawai
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nip:
+                  type: string
+                  example: "199002152012022001"
+                nama_pegawai:
+                  type: string
+                  example: "Ahmad Fauzi"
+                foto_base64:
+                  type: string
+                  description: String gambar base64
+      responses:
+        '200':
+          description: Data berhasil disimpan
+        '400':
+          description: Validasi gagal
+  /pegawai/update:
+    put:
+      summary: Memperbarui data pegawai
+      tags:
+        - Pegawai
+      parameters:
+        - in: query
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Data berhasil diperbarui
+  /pegawai/delete:
+    delete:
+      summary: Menghapus data pegawai
+      tags:
+        - Pegawai
+      parameters:
+        - in: query
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Data berhasil dihapus

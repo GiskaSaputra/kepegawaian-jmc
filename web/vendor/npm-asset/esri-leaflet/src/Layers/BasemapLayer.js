@@ -1,0 +1,572 @@
+import { TileLayer, Util } from 'leaflet';
+import { pointerEvents } from '../Support';
+import {
+  setEsriAttribution,
+  removeEsriAttribution,
+  _getAttributionData,
+  _updateMapAttribution
+} from '../Util';
+
+var tileProtocol = (window.location.protocol !== 'https:') ? 'http:' : 'https:';
+
+export var BasemapLayer = TileLayer.extend({
+  statics: {
+    TILES: {
+      Streets: {
+        deprecated: true,
+        tokenRequired: false,
+        urlTemplate: tileProtocol + '//{s}.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}',
+        options: {
+          minZoom: 1,
+          maxZoom: 19,
+          subdomains: ['server', 'services'],
+          attribution: 'USGS, NOAA',
+          attributionUrl: 'https://static.arcgis.com/attribution/World_Street_Map'
+        }
+      },
+      Topographic: {
+        deprecated: true,
+        tokenRequired: false,
+        urlTemplate: tileProtocol + '//{s}.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}',
+        options: {
+          minZoom: 1,
+          maxZoom: 19,
+          subdomains: ['server', 'services'],
+          attribution: 'USGS, NOAA',
+          attributionUrl: 'https://static.arcgis.com/attribution/World_Topo_Map'
+        }
+      },
+      Oceans: {
+        deprecated: true,
+        tokenRequired: false,
+        urlTemplate: tileProtocol + '//{s}.arcgisonline.com/arcgis/rest/services/Ocean/World_Ocean_Base/MapServer/tile/{z}/{y}/{x}',
+        options: {
+          minZoom: 1,
+          maxZoom: 16,
+          subdomains: ['server', 'services'],
+          attribution: 'USGS, NOAA',
+          attributionUrl: 'https://static.arcgis.com/attribution/Ocean_Basemap'
+        }
+      },
+      OceansLabels: {
+        deprecated: true,
+        tokenRequired: false,
+        urlTemplate: tileProtocol + '//{s}.arcgisonline.com/arcgis/rest/services/Ocean/World_Ocean_Reference/MapServer/tile/{z}/{y}/{x}',
+        options: {
+          minZoom: 1,
+          maxZoom: 16,
+          subdomains: ['server', 'services'],
+          pane: (pointerEvents) ? 'esri-labels' : 'tilePane',
+          attribution: ''
+        }
+      },
+      NationalGeographic: {
+        deprecated: true,
+        tokenRequired: false,
+        urlTemplate: tileProtocol + '//{s}.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer/tile/{z}/{y}/{x}',
+        options: {
+          minZoom: 1,
+          maxZoom: 16,
+          subdomains: ['server', 'services'],
+          attribution: 'National Geographic, DeLorme, HERE, UNEP-WCMC, USGS, NASA, ESA, METI, NRCAN, GEBCO, NOAA, increment P Corp.'
+        }
+      },
+      DarkGray: {
+        deprecated: true,
+        tokenRequired: false,
+        urlTemplate: tileProtocol + '//{s}.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}',
+        options: {
+          minZoom: 1,
+          maxZoom: 16,
+          subdomains: ['server', 'services'],
+          attribution: 'HERE, DeLorme, MapmyIndia, &copy; OpenStreetMap contributors'
+        }
+      },
+      DarkGrayLabels: {
+        deprecated: true,
+        tokenRequired: false,
+        urlTemplate: tileProtocol + '//{s}.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Reference/MapServer/tile/{z}/{y}/{x}',
+        options: {
+          minZoom: 1,
+          maxZoom: 16,
+          subdomains: ['server', 'services'],
+          pane: (pointerEvents) ? 'esri-labels' : 'tilePane',
+          attribution: ''
+
+        }
+      },
+      Gray: {
+        deprecated: true,
+        tokenRequired: false,
+        urlTemplate: tileProtocol + '//{s}.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}',
+        options: {
+          minZoom: 1,
+          maxZoom: 16,
+          subdomains: ['server', 'services'],
+          attribution: 'HERE, DeLorme, MapmyIndia, &copy; OpenStreetMap contributors'
+        }
+      },
+      GrayLabels: {
+        deprecated: true,
+        tokenRequired: false,
+        urlTemplate: tileProtocol + '//{s}.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Reference/MapServer/tile/{z}/{y}/{x}',
+        options: {
+          minZoom: 1,
+          maxZoom: 16,
+          subdomains: ['server', 'services'],
+          pane: (pointerEvents) ? 'esri-labels' : 'tilePane',
+          attribution: ''
+        }
+      },
+      Imagery: {
+        deprecated: true,
+        tokenRequired: false,
+        urlTemplate: tileProtocol + '//{s}.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+        options: {
+          minZoom: 1,
+          maxZoom: 19,
+          subdomains: ['server', 'services'],
+          attribution: 'DigitalGlobe, GeoEye, i-cubed, USDA, USGS, AEX, Getmapping, Aerogrid, IGN, IGP, swisstopo, and the GIS User Community',
+          attributionUrl: 'https://static.arcgis.com/attribution/World_Imagery'
+        }
+      },
+      ImageryLabels: {
+        deprecated: true,
+        tokenRequired: false,
+        urlTemplate: tileProtocol + '//{s}.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}',
+        options: {
+          minZoom: 1,
+          maxZoom: 19,
+          subdomains: ['server', 'services'],
+          pane: (pointerEvents) ? 'esri-labels' : 'tilePane',
+          attribution: ''
+        }
+      },
+      ImageryTransportation: {
+        deprecated: true,
+        tokenRequired: false,
+        urlTemplate: tileProtocol + '//{s}.arcgisonline.com/ArcGIS/rest/services/Reference/World_Transportation/MapServer/tile/{z}/{y}/{x}',
+        options: {
+          minZoom: 1,
+          maxZoom: 19,
+          subdomains: ['server', 'services'],
+          pane: (pointerEvents) ? 'esri-labels' : 'tilePane',
+          attribution: ''
+        }
+      },
+      ShadedRelief: {
+        deprecated: true,
+        tokenRequired: false,
+        urlTemplate: tileProtocol + '//{s}.arcgisonline.com/ArcGIS/rest/services/World_Shaded_Relief/MapServer/tile/{z}/{y}/{x}',
+        options: {
+          minZoom: 1,
+          maxZoom: 13,
+          subdomains: ['server', 'services'],
+          attribution: 'USGS'
+        }
+      },
+      ShadedReliefLabels: {
+        deprecated: true,
+        tokenRequired: false,
+        urlTemplate: tileProtocol + '//{s}.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places_Alternate/MapServer/tile/{z}/{y}/{x}',
+        options: {
+          minZoom: 1,
+          maxZoom: 12,
+          subdomains: ['server', 'services'],
+          pane: (pointerEvents) ? 'esri-labels' : 'tilePane',
+          attribution: ''
+        }
+      },
+      Terrain: {
+        deprecated: true,
+        tokenRequired: false,
+        urlTemplate: tileProtocol + '//{s}.arcgisonline.com/ArcGIS/rest/services/World_Terrain_Base/MapServer/tile/{z}/{y}/{x}',
+        options: {
+          minZoom: 1,
+          maxZoom: 13,
+          subdomains: ['server', 'services'],
+          attribution: 'USGS, NOAA'
+        }
+      },
+      TerrainLabels: {
+        deprecated: true,
+        tokenRequired: false,
+        urlTemplate: tileProtocol + '//{s}.arcgisonline.com/ArcGIS/rest/services/Reference/World_Reference_Overlay/MapServer/tile/{z}/{y}/{x}',
+        options: {
+          minZoom: 1,
+          maxZoom: 13,
+          subdomains: ['server', 'services'],
+          pane: (pointerEvents) ? 'esri-labels' : 'tilePane',
+          attribution: ''
+        }
+      },
+      USATopo: {
+        deprecated: true,
+        tokenRequired: false,
+        urlTemplate: tileProtocol + '//{s}.arcgisonline.com/ArcGIS/rest/services/USA_Topo_Maps/MapServer/tile/{z}/{y}/{x}',
+        options: {
+          minZoom: 1,
+          maxZoom: 15,
+          subdomains: ['server', 'services'],
+          attribution: 'USGS, National Geographic Society, i-cubed'
+        }
+      },
+      ImageryClarity: {
+        deprecated: true,
+        tokenRequired: false,
+        urlTemplate: tileProtocol + '//clarity.maptiles.arcgis.com/arcgis/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+        options: {
+          minZoom: 1,
+          maxZoom: 19,
+          attribution: 'Esri, DigitalGlobe, GeoEye, Earthstar Geographics, CNES/Airbus DS, USDA, USGS, AeroGRID, IGN, and the GIS User Community'
+        }
+      },
+      Physical: {
+        deprecated: true,
+        tokenRequired: false,
+        urlTemplate: tileProtocol + '//{s}.arcgisonline.com/arcgis/rest/services/World_Physical_Map/MapServer/tile/{z}/{y}/{x}',
+        options: {
+          minZoom: 1,
+          maxZoom: 8,
+          subdomains: ['server', 'services'],
+          attribution: 'U.S. National Park Service'
+        }
+      },
+      ImageryFirefly: {
+        deprecated: true,
+        tokenRequired: false,
+        urlTemplate: tileProtocol + '//fly.maptiles.arcgis.com/arcgis/rest/services/World_Imagery_Firefly/MapServer/tile/{z}/{y}/{x}',
+        options: {
+          minZoom: 1,
+          maxZoom: 19,
+          attribution: 'Esri, DigitalGlobe, GeoEye, Earthstar Geographics, CNES/Airbus DS, USDA, USGS, AeroGRID, IGN, and the GIS User Community',
+          attributionUrl: 'https://static.arcgis.com/attribution/World_Imagery'
+        }
+      },
+
+      'arcgis/navigation-beta': {
+        deprecated: false,
+        tokenRequired: true,
+        urlTemplate:
+          tileProtocol +
+          '//static-map-tiles-api.arcgis.com/arcgis/rest/services/static-basemap-tiles-service/beta/arcgis/navigation/static/tile/{z}/{y}/{x}',
+        options: {
+          minZoom: 1,
+          maxZoom: 19,
+          tileSize: 512,
+          zoomOffset: -1,
+          // attribution from
+          // https://static-map-tiles-api.arcgis.com/arcgis/rest/services/static-basemap-tiles-service/beta/arcgis/navigation/static?token=...
+          attribution: 'Esri, TomTom, Garmin, FAO, NOAA, USGS, © OpenStreetMap contributors, and the GIS User Community'
+        }
+      },
+
+      'arcgis/streets-beta': {
+        deprecated: false,
+        tokenRequired: true,
+        urlTemplate:
+          tileProtocol +
+          '//static-map-tiles-api.arcgis.com/arcgis/rest/services/static-basemap-tiles-service/beta/arcgis/streets/static/tile/{z}/{y}/{x}',
+        options: {
+          minZoom: 1,
+          maxZoom: 19,
+          tileSize: 512,
+          zoomOffset: -1,
+          // attribution from
+          // https://static-map-tiles-api.arcgis.com/arcgis/rest/services/static-basemap-tiles-service/beta/arcgis/streets/static?token=...
+          attribution: 'Esri, TomTom, Garmin, FAO, NOAA, USGS, © OpenStreetMap contributors, and the GIS User Community'
+        }
+      },
+
+      'arcgis/outdoor-beta': {
+        deprecated: false,
+        tokenRequired: true,
+        urlTemplate:
+          tileProtocol +
+          '//static-map-tiles-api.arcgis.com/arcgis/rest/services/static-basemap-tiles-service/beta/arcgis/outdoor/static/tile/{z}/{y}/{x}',
+        options: {
+          minZoom: 1,
+          maxZoom: 19,
+          tileSize: 512,
+          zoomOffset: -1,
+          // attribution from
+          // https://static-map-tiles-api.arcgis.com/arcgis/rest/services/static-basemap-tiles-service/beta/arcgis/outdoor/static?token=...
+          attribution: 'Esri, TomTom, Garmin, FAO, NOAA, USGS, © OpenStreetMap contributors, and the GIS User Community'
+        }
+      },
+
+      'arcgis/light-gray-beta': {
+        deprecated: false,
+        tokenRequired: true,
+        urlTemplate:
+          tileProtocol +
+          '//static-map-tiles-api.arcgis.com/arcgis/rest/services/static-basemap-tiles-service/beta/arcgis/light-gray/static/tile/{z}/{y}/{x}',
+        options: {
+          minZoom: 1,
+          maxZoom: 19,
+          tileSize: 512,
+          zoomOffset: -1,
+          // attribution from
+          // https://static-map-tiles-api.arcgis.com/arcgis/rest/services/static-basemap-tiles-service/beta/arcgis/light-gray/static?token=...
+          attribution: 'Esri, TomTom, Garmin, FAO, NOAA, USGS, © OpenStreetMap contributors, and the GIS User Community'
+        }
+      },
+
+      'arcgis/imagery/labels-beta': {
+        deprecated: false,
+        tokenRequired: true,
+        urlTemplate: tileProtocol + '//static-map-tiles-api.arcgis.com/arcgis/rest/services/static-basemap-tiles-service/beta/arcgis/imagery/labels/static/tile/{z}/{y}/{x}',
+        options: {
+          minZoom: 1,
+          maxZoom: 19,
+          tileSize: 512,
+          zoomOffset: -1,
+          // attribution from
+          // https://static-map-tiles-api.arcgis.com/arcgis/rest/services/static-basemap-tiles-service/beta/arcgis/imagery/labels/static?token=...
+          attribution: 'Esri, TomTom, Garmin, FAO, NOAA, USGS, © OpenStreetMap contributors, and the GIS User Community'
+        }
+      },
+      'arcgis/dark-gray-beta': {
+        deprecated: false,
+        tokenRequired: true,
+        urlTemplate: tileProtocol + '//static-map-tiles-api.arcgis.com/arcgis/rest/services/static-basemap-tiles-service/beta/arcgis/dark-gray/static/tile/{z}/{y}/{x}',
+        options: {
+          minZoom: 1,
+          maxZoom: 19,
+          tileSize: 512,
+          zoomOffset: -1,
+          // attribution from
+          // https://static-map-tiles-api.arcgis.com/arcgis/rest/services/static-basemap-tiles-service/beta/arcgis/dark-gray/static?token=...
+          attribution: 'Esri, TomTom, Garmin, FAO, NOAA, USGS, © OpenStreetMap contributors, and the GIS User Community'
+        }
+      },
+      'arcgis/navigation-night-beta': {
+        deprecated: false,
+        tokenRequired: true,
+        urlTemplate: tileProtocol + '//static-map-tiles-api.arcgis.com/arcgis/rest/services/static-basemap-tiles-service/beta/arcgis/navigation-night/static/tile/{z}/{y}/{x}',
+        options: {
+          minZoom: 1,
+          maxZoom: 19,
+          tileSize: 512,
+          zoomOffset: -1,
+          // attribution from
+          // https://static-map-tiles-api.arcgis.com/arcgis/rest/services/static-basemap-tiles-service/beta/arcgis/navigation-night/static?token=...
+          attribution: 'Esri, TomTom, Garmin, FAO, NOAA, USGS, © OpenStreetMap contributors, and the GIS User Community'
+        }
+      },
+      'arcgis/streets-night-beta': {
+        deprecated: false,
+        tokenRequired: true,
+        urlTemplate: tileProtocol + '//static-map-tiles-api.arcgis.com/arcgis/rest/services/static-basemap-tiles-service/beta/arcgis/streets-night/static/tile/{z}/{y}/{x}',
+        options: {
+          minZoom: 1,
+          maxZoom: 19,
+          tileSize: 512,
+          zoomOffset: -1,
+          // attribution from
+          // https://static-map-tiles-api.arcgis.com/arcgis/rest/services/static-basemap-tiles-service/beta/arcgis/streets-night/static?token=...
+          attribution: 'Esri, TomTom, Garmin, FAO, NOAA, USGS, © OpenStreetMap contributors, and the GIS User Community'
+        }
+      },
+      'arcgis/oceans/labels-beta': {
+        deprecated: false,
+        tokenRequired: true,
+        urlTemplate: tileProtocol + '//static-map-tiles-api.arcgis.com/arcgis/rest/services/static-basemap-tiles-service/beta/arcgis/oceans/labels/static/tile/{z}/{y}/{x}',
+        options: {
+          minZoom: 1,
+          maxZoom: 19,
+          tileSize: 512,
+          zoomOffset: -1,
+          // attribution from
+          // https://static-map-tiles-api.arcgis.com/arcgis/rest/services/static-basemap-tiles-service/beta/arcgis/oceans/labels/static?token=...
+          attribution: 'Esri, TomTom, Garmin, FAO, NOAA, USGS, © OpenStreetMap contributors, and the GIS User Community'
+        }
+      },
+      'arcgis/community-beta': {
+        deprecated: false,
+        tokenRequired: true,
+        urlTemplate: tileProtocol + '//static-map-tiles-api.arcgis.com/arcgis/rest/services/static-basemap-tiles-service/beta/arcgis/community/static/tile/{z}/{y}/{x}',
+        options: {
+          minZoom: 1,
+          maxZoom: 19,
+          tileSize: 512,
+          zoomOffset: -1,
+          // attribution from
+          // https://static-map-tiles-api.arcgis.com/arcgis/rest/services/static-basemap-tiles-service/beta/arcgis/community/static?token=...
+          attribution: 'Esri, TomTom, Garmin, FAO, NOAA, USGS, © OpenStreetMap contributors, and the GIS User Community'
+        }
+      },
+      'arcgis/nova-beta': {
+        deprecated: false,
+        tokenRequired: true,
+        urlTemplate: tileProtocol + '//static-map-tiles-api.arcgis.com/arcgis/rest/services/static-basemap-tiles-service/beta/arcgis/nova/static/tile/{z}/{y}/{x}',
+        options: {
+          minZoom: 1,
+          maxZoom: 19,
+          tileSize: 512,
+          zoomOffset: -1,
+          // attribution from
+          // https://static-map-tiles-api.arcgis.com/arcgis/rest/services/static-basemap-tiles-service/beta/arcgis/nova/static?token=...
+          attribution: 'Esri, TomTom, Garmin, FAO, NOAA, USGS, © OpenStreetMap contributors, and the GIS User Community'
+        }
+      },
+      'arcgis/midcentury-beta': {
+        deprecated: false,
+        tokenRequired: true,
+        urlTemplate: tileProtocol + '//static-map-tiles-api.arcgis.com/arcgis/rest/services/static-basemap-tiles-service/beta/arcgis/midcentury/static/tile/{z}/{y}/{x}',
+        options: {
+          minZoom: 1,
+          maxZoom: 19,
+          tileSize: 512,
+          zoomOffset: -1,
+          // attribution from
+          // https://static-map-tiles-api.arcgis.com/arcgis/rest/services/static-basemap-tiles-service/beta/arcgis/midcentury/static?token=...
+          attribution: 'Esri, TomTom, Garmin, FAO, NOAA, USGS, © OpenStreetMap contributors, and the GIS User Community'
+        }
+      },
+      'arcgis/newspaper-beta': {
+        deprecated: false,
+        tokenRequired: true,
+        urlTemplate: tileProtocol + '//static-map-tiles-api.arcgis.com/arcgis/rest/services/static-basemap-tiles-service/beta/arcgis/newspaper/static/tile/{z}/{y}/{x}',
+        options: {
+          minZoom: 1,
+          maxZoom: 19,
+          tileSize: 512,
+          zoomOffset: -1,
+          // attribution from
+          // https://static-map-tiles-api.arcgis.com/arcgis/rest/services/static-basemap-tiles-service/beta/arcgis/newspaper/static?token=...
+          attribution: 'Esri, TomTom, Garmin, FAO, NOAA, USGS, © OpenStreetMap contributors, and the GIS User Community'
+        }
+      },
+      'arcgis/human-geography-beta': {
+        deprecated: false,
+        tokenRequired: true,
+        urlTemplate: tileProtocol + '//static-map-tiles-api.arcgis.com/arcgis/rest/services/static-basemap-tiles-service/beta/arcgis/human-geography/static/tile/{z}/{y}/{x}',
+        options: {
+          minZoom: 1,
+          maxZoom: 19,
+          tileSize: 512,
+          zoomOffset: -1,
+          // attribution from
+          // https://static-map-tiles-api.arcgis.com/arcgis/rest/services/static-basemap-tiles-service/beta/arcgis/human-geography/static?token=...
+          attribution: 'Esri, TomTom, Garmin, FAO, NOAA, USGS, © OpenStreetMap contributors, and the GIS User Community'
+        }
+      },
+      'arcgis/human-geography-dark-beta': {
+        deprecated: false,
+        tokenRequired: true,
+        urlTemplate: tileProtocol + '//static-map-tiles-api.arcgis.com/arcgis/rest/services/static-basemap-tiles-service/beta/arcgis/human-geography-dark/static/tile/{z}/{y}/{x}',
+        options: {
+          minZoom: 1,
+          maxZoom: 19,
+          tileSize: 512,
+          zoomOffset: -1,
+          // attribution from
+          // https://static-map-tiles-api.arcgis.com/arcgis/rest/services/static-basemap-tiles-service/beta/arcgis/human-geography-dark/static?token=...
+          attribution: 'Esri, TomTom, Garmin, FAO, NOAA, USGS, © OpenStreetMap contributors, and the GIS User Community'
+        }
+      }
+    }
+  },
+
+  initialize: function (key, options) {
+    var config;
+
+    const nonDeprecatedOptions = Object.entries(BasemapLayer.TILES).filter(([k, v]) => !v.deprecated);
+    const nonDeprecatedList = nonDeprecatedOptions.map(([k, v]) => `"${k}"`);
+
+    // set the config variable with the appropriate config object
+    if (typeof key === 'object' && key.urlTemplate && key.options) {
+      config = key;
+    } else if (typeof key === 'string' && BasemapLayer.TILES[key]) {
+      config = BasemapLayer.TILES[key];
+    } else {
+      throw new Error(`L.esri.BasemapLayer: Invalid parameter. Use one of ${nonDeprecatedList.join(', ')}.`);
+    }
+
+    // token required
+    if (config.tokenRequired && config.tokenRequired === true && (!options || !options.token)) {
+      throw new Error(`L.esri.BasemapLayer: token required.`);
+    }
+
+    // merge passed options into the config options
+    var tileOptions = Util.extend(config.options, options);
+
+    Util.setOptions(this, tileOptions);
+
+    // Deprecation notice:
+    if (!this.options.ignoreDeprecationWarning && config.deprecated && config.deprecated === true) {
+      console.warn(`WARNING: L.esri.BasemapLayer uses data services that are in mature support and are not being updated. Please use one of the new values (${nonDeprecatedList.join(', ')}) or L.esri.Vector.vectorBasemapLayer instead. More info: https://esriurl.com/esri-leaflet-basemap`);
+    }
+
+    const urlParams = [];
+
+    if (this.options.token) {
+      urlParams.push('token=' + this.options.token);
+    }
+
+    if (config.tokenRequired && config.tokenRequired === true) {
+      // if the token is required, this is a service that requires the language parameter.
+      // "en" is the default:
+      const language = this.options.language ? this.options.language : 'en';
+      urlParams.push('language=' + language);
+    }
+
+    if (urlParams.length > 0) {
+      config.urlTemplate += '?' + urlParams.join('&');
+    }
+
+    if (this.options.proxy) {
+      config.urlTemplate = this.options.proxy + '?' + config.urlTemplate;
+    }
+
+    // call the initialize method on L.TileLayer to set everything up
+    TileLayer.prototype.initialize.call(this, config.urlTemplate, tileOptions);
+  },
+
+  onAdd: function (map) {
+    // include 'Powered by Esri' in map attribution
+    setEsriAttribution(map);
+
+    if (this.options.pane === 'esri-labels') {
+      this._initPane();
+    }
+    // some basemaps can supply dynamic attribution
+    if (this.options.attributionUrl) {
+      _getAttributionData((this.options.proxy ? this.options.proxy + '?' : '') + this.options.attributionUrl, map);
+    }
+
+    map.on('moveend', _updateMapAttribution);
+
+    TileLayer.prototype.onAdd.call(this, map);
+  },
+
+  onRemove: function (map) {
+    removeEsriAttribution(map);
+
+    map.off('moveend', _updateMapAttribution);
+
+    TileLayer.prototype.onRemove.call(this, map);
+  },
+
+  _initPane: function () {
+    if (!this._map.getPane(this.options.pane)) {
+      var pane = this._map.createPane(this.options.pane);
+      pane.style.pointerEvents = 'none';
+      pane.style.zIndex = 500;
+    }
+  },
+
+  getAttribution: function () {
+    if (this.options.attribution) {
+      var attribution = '<span class="esri-dynamic-attribution">' + this.options.attribution + '</span>';
+    }
+    return attribution;
+  }
+});
+
+export function basemapLayer (key, options) {
+  return new BasemapLayer(key, options);
+}
+
+export default basemapLayer;

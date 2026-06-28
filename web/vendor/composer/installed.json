@@ -1,0 +1,995 @@
+{
+    "packages": [
+        {
+            "name": "anovsiradj/cutter",
+            "version": "dev-master",
+            "version_normalized": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/anovsiradj/php-cutter.git",
+                "reference": "e19af0f20544552ce790d75d12eb9f66ccc26f98"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/anovsiradj/php-cutter/zipball/e19af0f20544552ce790d75d12eb9f66ccc26f98",
+                "reference": "e19af0f20544552ce790d75d12eb9f66ccc26f98",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.6"
+            },
+            "require-dev": {
+                "symfony/var-dumper": "~3 || @stable"
+            },
+            "time": "2024-06-10T01:25:18+00:00",
+            "default-branch": true,
+            "type": "library",
+            "installation-source": "dist",
+            "autoload": {
+                "classmap": [
+                    "Cutter.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "anovsiradj",
+                    "email": "anov.siradj22@gmail.com"
+                }
+            ],
+            "description": "Flexible Template Library",
+            "support": {
+                "issues": "https://github.com/anovsiradj/php-cutter/issues",
+                "source": "https://github.com/anovsiradj/php-cutter/tree/4.0.0"
+            },
+            "install-path": "../anovsiradj/cutter"
+        },
+        {
+            "name": "npm-asset/apexcharts",
+            "version": "5.3.5",
+            "version_normalized": "5.3.5.0",
+            "dist": {
+                "type": "tar",
+                "url": "https://registry.npmjs.org/apexcharts/-/apexcharts-5.3.5.tgz"
+            },
+            "require": {
+                "npm-asset/svgdotjs--svg.draggable.js": ">=3.0.4,<4.0.0",
+                "npm-asset/svgdotjs--svg.filter.js": ">=3.0.8,<4.0.0",
+                "npm-asset/svgdotjs--svg.js": ">=3.2.4,<4.0.0",
+                "npm-asset/svgdotjs--svg.resize.js": ">=2.0.2,<3.0.0",
+                "npm-asset/svgdotjs--svg.select.js": ">=4.0.1,<5.0.0",
+                "npm-asset/yr--monotone-cubic-spline": ">=1.0.3,<2.0.0"
+            },
+            "type": "npm-asset",
+            "installation-source": "dist",
+            "license": [
+                "SEE LICENSE IN LICENSE"
+            ],
+            "install-path": "../npm-asset/apexcharts"
+        },
+        {
+            "name": "npm-asset/bootstrap",
+            "version": "5.3.3",
+            "version_normalized": "5.3.3.0",
+            "dist": {
+                "type": "tar",
+                "url": "https://registry.npmjs.org/bootstrap/-/bootstrap-5.3.3.tgz"
+            },
+            "type": "npm-asset",
+            "installation-source": "dist",
+            "license": [
+                "MIT"
+            ],
+            "install-path": "../npm-asset/bootstrap"
+        },
+        {
+            "name": "npm-asset/bootstrap-icons",
+            "version": "1.13.1",
+            "version_normalized": "1.13.1.0",
+            "dist": {
+                "type": "tar",
+                "url": "https://registry.npmjs.org/bootstrap-icons/-/bootstrap-icons-1.13.1.tgz"
+            },
+            "type": "npm-asset",
+            "installation-source": "dist",
+            "license": [
+                "MIT"
+            ],
+            "install-path": "../npm-asset/bootstrap-icons"
+        },
+        {
+            "name": "npm-asset/codemirror",
+            "version": "6.65.7",
+            "version_normalized": "6.65.7.0",
+            "dist": {
+                "type": "tar",
+                "url": "https://registry.npmjs.org/codemirror/-/codemirror-6.65.7.tgz"
+            },
+            "type": "npm-asset",
+            "installation-source": "dist",
+            "license": [
+                "MIT"
+            ],
+            "install-path": "../npm-asset/codemirror"
+        },
+        {
+            "name": "npm-asset/datatables.net",
+            "version": "2.3.4",
+            "version_normalized": "2.3.4.0",
+            "dist": {
+                "type": "tar",
+                "url": "https://registry.npmjs.org/datatables.net/-/datatables.net-2.3.4.tgz"
+            },
+            "require": {
+                "npm-asset/jquery": ">=1.7"
+            },
+            "type": "npm-asset",
+            "installation-source": "dist",
+            "license": [
+                "MIT"
+            ],
+            "install-path": "../npm-asset/datatables.net"
+        },
+        {
+            "name": "npm-asset/datatables.net-bs5",
+            "version": "2.3.4",
+            "version_normalized": "2.3.4.0",
+            "dist": {
+                "type": "tar",
+                "url": "https://registry.npmjs.org/datatables.net-bs5/-/datatables.net-bs5-2.3.4.tgz"
+            },
+            "require": {
+                "npm-asset/datatables.net": "2.3.4",
+                "npm-asset/jquery": ">=1.7"
+            },
+            "type": "npm-asset",
+            "installation-source": "dist",
+            "license": [
+                "MIT"
+            ],
+            "install-path": "../npm-asset/datatables.net-bs5"
+        },
+        {
+            "name": "npm-asset/esri-leaflet",
+            "version": "3.1.0",
+            "version_normalized": "3.1.0.0",
+            "dist": {
+                "type": "tar",
+                "url": "https://registry.npmjs.org/esri-leaflet/-/esri-leaflet-3.1.0.tgz"
+            },
+            "require": {
+                "npm-asset/terraformer--arcgis": ">=2.1.0,<3.0.0",
+                "npm-asset/tiny-binary-search": ">=1.0.3,<2.0.0"
+            },
+            "type": "npm-asset",
+            "installation-source": "dist",
+            "license": [
+                "Apache-2.0"
+            ],
+            "install-path": "../npm-asset/esri-leaflet"
+        },
+        {
+            "name": "npm-asset/esri-leaflet-geocoder",
+            "version": "3.1.5",
+            "version_normalized": "3.1.5.0",
+            "dist": {
+                "type": "tar",
+                "url": "https://registry.npmjs.org/esri-leaflet-geocoder/-/esri-leaflet-geocoder-3.1.5.tgz"
+            },
+            "require": {
+                "npm-asset/esri-leaflet": ">=3.0.2,<4.0.0",
+                "npm-asset/leaflet": ">=1.0.0,<2.0.0"
+            },
+            "type": "npm-asset",
+            "installation-source": "dist",
+            "license": [
+                "Apache-2.0"
+            ],
+            "install-path": "../npm-asset/esri-leaflet-geocoder"
+        },
+        {
+            "name": "npm-asset/fontsource--inter",
+            "version": "5.2.8",
+            "version_normalized": "5.2.8.0",
+            "dist": {
+                "type": "tar",
+                "url": "https://registry.npmjs.org/@fontsource/inter/-/inter-5.2.8.tgz"
+            },
+            "type": "npm-asset",
+            "installation-source": "dist",
+            "license": [
+                "OFL-1.1"
+            ],
+            "install-path": "../npm-asset/fontsource--inter"
+        },
+        {
+            "name": "npm-asset/fslightbox",
+            "version": "3.5.1",
+            "version_normalized": "3.5.1.0",
+            "dist": {
+                "type": "tar",
+                "url": "https://registry.npmjs.org/fslightbox/-/fslightbox-3.5.1.tgz"
+            },
+            "type": "npm-asset",
+            "installation-source": "dist",
+            "license": [
+                "MIT"
+            ],
+            "install-path": "../npm-asset/fslightbox"
+        },
+        {
+            "name": "npm-asset/fullcalendar",
+            "version": "6.1.18",
+            "version_normalized": "6.1.18.0",
+            "dist": {
+                "type": "tar",
+                "url": "https://registry.npmjs.org/fullcalendar/-/fullcalendar-6.1.18.tgz"
+            },
+            "require": {
+                "npm-asset/fullcalendar--core": "~6.1.18",
+                "npm-asset/fullcalendar--daygrid": "~6.1.18",
+                "npm-asset/fullcalendar--interaction": "~6.1.18",
+                "npm-asset/fullcalendar--list": "~6.1.18",
+                "npm-asset/fullcalendar--multimonth": "~6.1.18",
+                "npm-asset/fullcalendar--timegrid": "~6.1.18"
+            },
+            "type": "npm-asset",
+            "installation-source": "dist",
+            "license": [
+                "MIT"
+            ],
+            "install-path": "../npm-asset/fullcalendar"
+        },
+        {
+            "name": "npm-asset/fullcalendar--core",
+            "version": "6.1.19",
+            "version_normalized": "6.1.19.0",
+            "dist": {
+                "type": "tar",
+                "url": "https://registry.npmjs.org/@fullcalendar/core/-/core-6.1.19.tgz"
+            },
+            "require": {
+                "npm-asset/preact": "~10.12.1"
+            },
+            "type": "npm-asset",
+            "installation-source": "dist",
+            "license": [
+                "MIT"
+            ],
+            "install-path": "../npm-asset/fullcalendar--core"
+        },
+        {
+            "name": "npm-asset/fullcalendar--daygrid",
+            "version": "6.1.19",
+            "version_normalized": "6.1.19.0",
+            "dist": {
+                "type": "tar",
+                "url": "https://registry.npmjs.org/@fullcalendar/daygrid/-/daygrid-6.1.19.tgz"
+            },
+            "type": "npm-asset",
+            "installation-source": "dist",
+            "license": [
+                "MIT"
+            ],
+            "install-path": "../npm-asset/fullcalendar--daygrid"
+        },
+        {
+            "name": "npm-asset/fullcalendar--interaction",
+            "version": "6.1.18",
+            "version_normalized": "6.1.18.0",
+            "dist": {
+                "type": "tar",
+                "url": "https://registry.npmjs.org/@fullcalendar/interaction/-/interaction-6.1.18.tgz"
+            },
+            "type": "npm-asset",
+            "installation-source": "dist",
+            "license": [
+                "MIT"
+            ],
+            "install-path": "../npm-asset/fullcalendar--interaction"
+        },
+        {
+            "name": "npm-asset/fullcalendar--list",
+            "version": "6.1.19",
+            "version_normalized": "6.1.19.0",
+            "dist": {
+                "type": "tar",
+                "url": "https://registry.npmjs.org/@fullcalendar/list/-/list-6.1.19.tgz"
+            },
+            "type": "npm-asset",
+            "installation-source": "dist",
+            "license": [
+                "MIT"
+            ],
+            "install-path": "../npm-asset/fullcalendar--list"
+        },
+        {
+            "name": "npm-asset/fullcalendar--multimonth",
+            "version": "6.1.19",
+            "version_normalized": "6.1.19.0",
+            "dist": {
+                "type": "tar",
+                "url": "https://registry.npmjs.org/@fullcalendar/multimonth/-/multimonth-6.1.19.tgz"
+            },
+            "require": {
+                "npm-asset/fullcalendar--daygrid": "~6.1.19"
+            },
+            "type": "npm-asset",
+            "installation-source": "dist",
+            "license": [
+                "MIT"
+            ],
+            "install-path": "../npm-asset/fullcalendar--multimonth"
+        },
+        {
+            "name": "npm-asset/fullcalendar--timegrid",
+            "version": "6.1.18",
+            "version_normalized": "6.1.18.0",
+            "dist": {
+                "type": "tar",
+                "url": "https://registry.npmjs.org/@fullcalendar/timegrid/-/timegrid-6.1.18.tgz"
+            },
+            "require": {
+                "npm-asset/fullcalendar--daygrid": "~6.1.18"
+            },
+            "type": "npm-asset",
+            "installation-source": "dist",
+            "license": [
+                "MIT"
+            ],
+            "install-path": "../npm-asset/fullcalendar--timegrid"
+        },
+        {
+            "name": "npm-asset/inter-ui",
+            "version": "4.1.1",
+            "version_normalized": "4.1.1.0",
+            "dist": {
+                "type": "tar",
+                "url": "https://registry.npmjs.org/inter-ui/-/inter-ui-4.1.1.tgz"
+            },
+            "type": "npm-asset",
+            "installation-source": "dist",
+            "license": [
+                "OFL-1.1"
+            ],
+            "install-path": "../npm-asset/inter-ui"
+        },
+        {
+            "name": "npm-asset/jquery",
+            "version": "3.7.1",
+            "version_normalized": "3.7.1.0",
+            "dist": {
+                "type": "tar",
+                "url": "https://registry.npmjs.org/jquery/-/jquery-3.7.1.tgz"
+            },
+            "type": "npm-asset",
+            "installation-source": "dist",
+            "license": [
+                "MIT"
+            ],
+            "install-path": "../npm-asset/jquery"
+        },
+        {
+            "name": "npm-asset/jsvectormap",
+            "version": "1.6.0",
+            "version_normalized": "1.6.0.0",
+            "dist": {
+                "type": "tar",
+                "url": "https://registry.npmjs.org/jsvectormap/-/jsvectormap-1.6.0.tgz"
+            },
+            "type": "npm-asset",
+            "installation-source": "dist",
+            "license": [
+                "MIT"
+            ],
+            "install-path": "../npm-asset/jsvectormap"
+        },
+        {
+            "name": "npm-asset/leaflet",
+            "version": "1.9.4",
+            "version_normalized": "1.9.4.0",
+            "dist": {
+                "type": "tar",
+                "url": "https://registry.npmjs.org/leaflet/-/leaflet-1.9.4.tgz"
+            },
+            "type": "npm-asset",
+            "installation-source": "dist",
+            "license": [
+                "BSD-2-Clause"
+            ],
+            "install-path": "../npm-asset/leaflet"
+        },
+        {
+            "name": "npm-asset/leaflet.markercluster",
+            "version": "1.5.3",
+            "version_normalized": "1.5.3.0",
+            "dist": {
+                "type": "tar",
+                "url": "https://registry.npmjs.org/leaflet.markercluster/-/leaflet.markercluster-1.5.3.tgz"
+            },
+            "type": "npm-asset",
+            "installation-source": "dist",
+            "license": [
+                "MIT"
+            ],
+            "install-path": "../npm-asset/leaflet.markercluster"
+        },
+        {
+            "name": "npm-asset/litepicker",
+            "version": "2.0.12",
+            "version_normalized": "2.0.12.0",
+            "dist": {
+                "type": "tar",
+                "url": "https://registry.npmjs.org/litepicker/-/litepicker-2.0.12.tgz"
+            },
+            "type": "npm-asset",
+            "installation-source": "dist",
+            "license": [
+                "MIT"
+            ],
+            "install-path": "../npm-asset/litepicker"
+        },
+        {
+            "name": "npm-asset/nouislider",
+            "version": "15.8.1",
+            "version_normalized": "15.8.1.0",
+            "dist": {
+                "type": "tar",
+                "url": "https://registry.npmjs.org/nouislider/-/nouislider-15.8.1.tgz"
+            },
+            "type": "npm-asset",
+            "installation-source": "dist",
+            "license": [
+                "MIT"
+            ],
+            "install-path": "../npm-asset/nouislider"
+        },
+        {
+            "name": "npm-asset/orchidjs--sifter",
+            "version": "1.1.0",
+            "version_normalized": "1.1.0.0",
+            "dist": {
+                "type": "tar",
+                "url": "https://registry.npmjs.org/@orchidjs/sifter/-/sifter-1.1.0.tgz"
+            },
+            "require": {
+                "npm-asset/orchidjs--unicode-variants": ">=1.1.2,<2.0.0"
+            },
+            "type": "npm-asset",
+            "installation-source": "dist",
+            "license": [
+                "Apache-2.0"
+            ],
+            "install-path": "../npm-asset/orchidjs--sifter"
+        },
+        {
+            "name": "npm-asset/orchidjs--unicode-variants",
+            "version": "1.1.2",
+            "version_normalized": "1.1.2.0",
+            "dist": {
+                "type": "tar",
+                "url": "https://registry.npmjs.org/@orchidjs/unicode-variants/-/unicode-variants-1.1.2.tgz"
+            },
+            "type": "npm-asset",
+            "installation-source": "dist",
+            "license": [
+                "Apache-2.0"
+            ],
+            "install-path": "../npm-asset/orchidjs--unicode-variants"
+        },
+        {
+            "name": "npm-asset/popperjs--core",
+            "version": "2.11.8",
+            "version_normalized": "2.11.8.0",
+            "dist": {
+                "type": "tar",
+                "url": "https://registry.npmjs.org/@popperjs/core/-/core-2.11.8.tgz"
+            },
+            "type": "npm-asset",
+            "installation-source": "dist",
+            "license": [
+                "MIT"
+            ],
+            "install-path": "../npm-asset/popperjs--core"
+        },
+        {
+            "name": "npm-asset/preact",
+            "version": "10.12.1",
+            "version_normalized": "10.12.1.0",
+            "dist": {
+                "type": "tar",
+                "url": "https://registry.npmjs.org/preact/-/preact-10.12.1.tgz"
+            },
+            "type": "npm-asset",
+            "installation-source": "dist",
+            "license": [
+                "MIT"
+            ],
+            "install-path": "../npm-asset/preact"
+        },
+        {
+            "name": "npm-asset/svgdotjs--svg.draggable.js",
+            "version": "3.0.4",
+            "version_normalized": "3.0.4.0",
+            "dist": {
+                "type": "tar",
+                "url": "https://registry.npmjs.org/@svgdotjs/svg.draggable.js/-/svg.draggable.js-3.0.4.tgz"
+            },
+            "type": "npm-asset",
+            "installation-source": "dist",
+            "license": [
+                "MIT"
+            ],
+            "install-path": "../npm-asset/svgdotjs--svg.draggable.js"
+        },
+        {
+            "name": "npm-asset/svgdotjs--svg.filter.js",
+            "version": "3.0.8",
+            "version_normalized": "3.0.8.0",
+            "dist": {
+                "type": "tar",
+                "url": "https://registry.npmjs.org/@svgdotjs/svg.filter.js/-/svg.filter.js-3.0.8.tgz"
+            },
+            "require": {
+                "npm-asset/svgdotjs--svg.js": ">=3.1.1,<4.0.0"
+            },
+            "type": "npm-asset",
+            "installation-source": "dist",
+            "license": [
+                "MIT"
+            ],
+            "install-path": "../npm-asset/svgdotjs--svg.filter.js"
+        },
+        {
+            "name": "npm-asset/svgdotjs--svg.js",
+            "version": "3.2.4",
+            "version_normalized": "3.2.4.0",
+            "dist": {
+                "type": "tar",
+                "url": "https://registry.npmjs.org/@svgdotjs/svg.js/-/svg.js-3.2.4.tgz"
+            },
+            "type": "npm-asset",
+            "installation-source": "dist",
+            "license": [
+                "MIT"
+            ],
+            "install-path": "../npm-asset/svgdotjs--svg.js"
+        },
+        {
+            "name": "npm-asset/svgdotjs--svg.resize.js",
+            "version": "2.0.2",
+            "version_normalized": "2.0.2.0",
+            "dist": {
+                "type": "tar",
+                "url": "https://registry.npmjs.org/@svgdotjs/svg.resize.js/-/svg.resize.js-2.0.2.tgz"
+            },
+            "type": "npm-asset",
+            "installation-source": "dist",
+            "license": [
+                "MIT"
+            ],
+            "install-path": "../npm-asset/svgdotjs--svg.resize.js"
+        },
+        {
+            "name": "npm-asset/svgdotjs--svg.select.js",
+            "version": "4.0.1",
+            "version_normalized": "4.0.1.0",
+            "dist": {
+                "type": "tar",
+                "url": "https://registry.npmjs.org/@svgdotjs/svg.select.js/-/svg.select.js-4.0.1.tgz"
+            },
+            "type": "npm-asset",
+            "installation-source": "dist",
+            "license": [
+                "MIT"
+            ],
+            "install-path": "../npm-asset/svgdotjs--svg.select.js"
+        },
+        {
+            "name": "npm-asset/sweetalert2",
+            "version": "11.19.1",
+            "version_normalized": "11.19.1.0",
+            "dist": {
+                "type": "tar",
+                "url": "https://registry.npmjs.org/sweetalert2/-/sweetalert2-11.19.1.tgz"
+            },
+            "type": "npm-asset",
+            "installation-source": "dist",
+            "license": [
+                "MIT"
+            ],
+            "install-path": "../npm-asset/sweetalert2"
+        },
+        {
+            "name": "npm-asset/swiper",
+            "version": "12.0.3",
+            "version_normalized": "12.0.3.0",
+            "dist": {
+                "type": "tar",
+                "url": "https://registry.npmjs.org/swiper/-/swiper-12.0.3.tgz"
+            },
+            "type": "npm-asset",
+            "installation-source": "dist",
+            "license": [
+                "MIT"
+            ],
+            "install-path": "../npm-asset/swiper"
+        },
+        {
+            "name": "npm-asset/tabler--core",
+            "version": "1.0.0-beta24",
+            "version_normalized": "1.0.0.0-beta24",
+            "dist": {
+                "type": "tar",
+                "url": "https://registry.npmjs.org/@tabler/core/-/core-1.0.0-beta24.tgz"
+            },
+            "require": {
+                "npm-asset/bootstrap": "5.3.3",
+                "npm-asset/popperjs--core": ">=2.11.8,<3.0.0",
+                "npm-asset/tabler--icons": ">=3.26.0,<4.0.0"
+            },
+            "type": "npm-asset",
+            "installation-source": "dist",
+            "license": [
+                "MIT"
+            ],
+            "install-path": "../npm-asset/tabler--core"
+        },
+        {
+            "name": "npm-asset/tabler--icons",
+            "version": "3.35.0",
+            "version_normalized": "3.35.0.0",
+            "dist": {
+                "type": "tar",
+                "url": "https://registry.npmjs.org/@tabler/icons/-/icons-3.35.0.tgz"
+            },
+            "type": "npm-asset",
+            "installation-source": "dist",
+            "license": [
+                "MIT"
+            ],
+            "install-path": "../npm-asset/tabler--icons"
+        },
+        {
+            "name": "npm-asset/terraformer--arcgis",
+            "version": "2.1.1",
+            "version_normalized": "2.1.1.0",
+            "dist": {
+                "type": "tar",
+                "url": "https://registry.npmjs.org/@terraformer/arcgis/-/arcgis-2.1.1.tgz"
+            },
+            "require": {
+                "npm-asset/terraformer--common": ">=2.0.7,<3.0.0"
+            },
+            "type": "npm-asset",
+            "installation-source": "dist",
+            "license": [
+                "MIT"
+            ],
+            "install-path": "../npm-asset/terraformer--arcgis"
+        },
+        {
+            "name": "npm-asset/terraformer--common",
+            "version": "v2.1.1",
+            "version_normalized": "2.1.1.0",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:terraformer-js/terraformer.git",
+                "reference": "69dd81e25bdfda536b697660e4df054b1e8ba663"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/terraformer-js/terraformer/zipball/69dd81e25bdfda536b697660e4df054b1e8ba663",
+                "reference": "69dd81e25bdfda536b697660e4df054b1e8ba663"
+            },
+            "type": "npm-asset",
+            "installation-source": "dist",
+            "license": [
+                "MIT"
+            ],
+            "install-path": "../npm-asset/terraformer--common"
+        },
+        {
+            "name": "npm-asset/tiny-binary-search",
+            "version": "1.0.3",
+            "version_normalized": "1.0.3.0",
+            "dist": {
+                "type": "tar",
+                "url": "https://registry.npmjs.org/tiny-binary-search/-/tiny-binary-search-1.0.3.tgz"
+            },
+            "type": "npm-asset",
+            "installation-source": "dist",
+            "license": [
+                "Apache-2.0"
+            ],
+            "install-path": "../npm-asset/tiny-binary-search"
+        },
+        {
+            "name": "npm-asset/tom-select",
+            "version": "2.4.3",
+            "version_normalized": "2.4.3.0",
+            "dist": {
+                "type": "tar",
+                "url": "https://registry.npmjs.org/tom-select/-/tom-select-2.4.3.tgz"
+            },
+            "require": {
+                "npm-asset/orchidjs--sifter": ">=1.1.0,<2.0.0",
+                "npm-asset/orchidjs--unicode-variants": ">=1.1.2,<2.0.0"
+            },
+            "type": "npm-asset",
+            "installation-source": "dist",
+            "license": [
+                "Apache-2.0"
+            ],
+            "install-path": "../npm-asset/tom-select"
+        },
+        {
+            "name": "npm-asset/yr--monotone-cubic-spline",
+            "version": "1.0.3",
+            "version_normalized": "1.0.3.0",
+            "dist": {
+                "type": "tar",
+                "url": "https://registry.npmjs.org/@yr/monotone-cubic-spline/-/monotone-cubic-spline-1.0.3.tgz"
+            },
+            "type": "npm-asset",
+            "installation-source": "dist",
+            "license": [
+                "MIT"
+            ],
+            "install-path": "../npm-asset/yr--monotone-cubic-spline"
+        },
+        {
+            "name": "symfony/deprecation-contracts",
+            "version": "v3.6.0",
+            "version_normalized": "3.6.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/deprecation-contracts.git",
+                "reference": "63afe740e99a13ba87ec199bb07bbdee937a5b62"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/deprecation-contracts/zipball/63afe740e99a13ba87ec199bb07bbdee937a5b62",
+                "reference": "63afe740e99a13ba87ec199bb07bbdee937a5b62",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.1"
+            },
+            "time": "2024-09-25T14:21:43+00:00",
+            "type": "library",
+            "extra": {
+                "thanks": {
+                    "url": "https://github.com/symfony/contracts",
+                    "name": "symfony/contracts"
+                },
+                "branch-alias": {
+                    "dev-main": "3.6-dev"
+                }
+            },
+            "installation-source": "dist",
+            "autoload": {
+                "files": [
+                    "function.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nicolas Grekas",
+                    "email": "p@tchwork.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "A generic function and convention to trigger deprecation notices",
+            "homepage": "https://symfony.com",
+            "support": {
+                "source": "https://github.com/symfony/deprecation-contracts/tree/v3.6.0"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "install-path": "../symfony/deprecation-contracts"
+        },
+        {
+            "name": "symfony/polyfill-mbstring",
+            "version": "v1.33.0",
+            "version_normalized": "1.33.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/polyfill-mbstring.git",
+                "reference": "6d857f4d76bd4b343eac26d6b539585d2bc56493"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/6d857f4d76bd4b343eac26d6b539585d2bc56493",
+                "reference": "6d857f4d76bd4b343eac26d6b539585d2bc56493",
+                "shasum": ""
+            },
+            "require": {
+                "ext-iconv": "*",
+                "php": ">=7.2"
+            },
+            "provide": {
+                "ext-mbstring": "*"
+            },
+            "suggest": {
+                "ext-mbstring": "For best performance"
+            },
+            "time": "2024-12-23T08:48:59+00:00",
+            "type": "library",
+            "extra": {
+                "thanks": {
+                    "url": "https://github.com/symfony/polyfill",
+                    "name": "symfony/polyfill"
+                }
+            },
+            "installation-source": "dist",
+            "autoload": {
+                "files": [
+                    "bootstrap.php"
+                ],
+                "psr-4": {
+                    "Symfony\\Polyfill\\Mbstring\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nicolas Grekas",
+                    "email": "p@tchwork.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony polyfill for the Mbstring extension",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "compatibility",
+                "mbstring",
+                "polyfill",
+                "portable",
+                "shim"
+            ],
+            "support": {
+                "source": "https://github.com/symfony/polyfill-mbstring/tree/v1.33.0"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://github.com/nicolas-grekas",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "install-path": "../symfony/polyfill-mbstring"
+        },
+        {
+            "name": "symfony/var-dumper",
+            "version": "v7.3.5",
+            "version_normalized": "7.3.5.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/var-dumper.git",
+                "reference": "476c4ae17f43a9a36650c69879dcf5b1e6ae724d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/var-dumper/zipball/476c4ae17f43a9a36650c69879dcf5b1e6ae724d",
+                "reference": "476c4ae17f43a9a36650c69879dcf5b1e6ae724d",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.2",
+                "symfony/deprecation-contracts": "^2.5|^3",
+                "symfony/polyfill-mbstring": "~1.0"
+            },
+            "conflict": {
+                "symfony/console": "<6.4"
+            },
+            "require-dev": {
+                "symfony/console": "^6.4|^7.0",
+                "symfony/http-kernel": "^6.4|^7.0",
+                "symfony/process": "^6.4|^7.0",
+                "symfony/uid": "^6.4|^7.0",
+                "twig/twig": "^3.12"
+            },
+            "time": "2025-09-27T09:00:46+00:00",
+            "bin": [
+                "Resources/bin/var-dump-server"
+            ],
+            "type": "library",
+            "installation-source": "dist",
+            "autoload": {
+                "files": [
+                    "Resources/functions/dump.php"
+                ],
+                "psr-4": {
+                    "Symfony\\Component\\VarDumper\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nicolas Grekas",
+                    "email": "p@tchwork.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Provides mechanisms for walking through any arbitrary PHP variable",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "debug",
+                "dump"
+            ],
+            "support": {
+                "source": "https://github.com/symfony/var-dumper/tree/v7.3.5"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://github.com/nicolas-grekas",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "install-path": "../symfony/var-dumper"
+        }
+    ],
+    "dev": true,
+    "dev-package-names": []
+}

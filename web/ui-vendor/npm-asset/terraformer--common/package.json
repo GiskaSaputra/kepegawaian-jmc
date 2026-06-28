@@ -1,0 +1,60 @@
+{
+  "name": "terraformer",
+  "private": true,
+  "version": "2.0.0",
+  "description": "A geographic toolkit for dealing with geometry, geography, formats, and building geodatabases",
+  "main": "index.js",
+  "scripts": {
+    "bootstrap": "lerna bootstrap",
+    "build": "lerna run build",
+    "doc": "lerna run doc",
+    "docs:serve": "npm run jsdoc && http-server & onchange -v 'packages/**/*.js' -- npm run jsdoc",
+    "lint": "semistandard | snazzy",
+    "test:node": "node test-helper.js",
+    "test:electron": "browserify packages/**/test/*.js -t [ babelify --presets [ @babel/preset-env ] ] --debug | tape-run",
+    "test:chrome": "browserify packages/**/test/*.js -t [ babelify --presets [ @babel/preset-env ] ] --debug | tape-run --browser chrome",
+    "test:firefox": "browserify packages/**/test/*.js -t [ babelify --presets [ @babel/preset-env ] ] --debug | tape-run --browser firefox",
+    "pretest:ci": "npm run build",
+    "test": "npm run lint && npm run test:node",
+    "test:ci": "npm run lint && npm run test:node && npm run test:electron",
+    "prerelease": "npm run build && npm run doc",
+    "release": "lerna publish",
+    "postinstall": "npm run bootstrap"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/terraformer-js/terraformer.git"
+  },
+  "keywords": [
+    "esri",
+    "geojson",
+    "wkt",
+    "spatial"
+  ],
+  "author": "john gravois",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/terraformer-js/terraformer/issues"
+  },
+  "homepage": "https://github.com/terraformer-js/terraformer#readme",
+  "devDependencies": {
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.9.0",
+    "@babel/node": "^7.2.2",
+    "@babel/preset-env": "^7.9.5",
+    "@rollup/plugin-babel": "^5.0.0",
+    "babelify": "^10.0.0",
+    "browserify": "^16.0.0",
+    "gh-release": "^6.0.4",
+    "jsdoc": "^3.6.4",
+    "jsdoc-to-markdown": "^7.1.1",
+    "lerna": "^5.0.0",
+    "onchange": "^6.1.0",
+    "rollup": "^1.0.1",
+    "rollup-plugin-json": "^3.1.0",
+    "rollup-plugin-node-resolve": "^4.0.0",
+    "semistandard": "^14.2.0",
+    "snazzy": "^8.0.0",
+    "tape": "^4.0.0"
+  }
+}
