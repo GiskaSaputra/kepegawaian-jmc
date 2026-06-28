@@ -4,6 +4,11 @@ use yii\helpers\Url;
 
 $this->title = 'Profile';
 $this->params['breadcrumbs'][] = ['label' => 'Profile'];
+
+// Logika dinamis: Cek apakah ada field foto di database. Jika tidak ada, panggil default.jpg
+$fotoProfil = (isset($user->foto) && $user->foto)
+    ? Url::to('@web/uploads/profile/' . $user->foto)
+    : Url::to('@web/ui-assets/images/pegawai/default.jpg');
 ?>
 
 <div class="container">
@@ -13,9 +18,15 @@ $this->params['breadcrumbs'][] = ['label' => 'Profile'];
         </div>
         <div class="card-body">
             <div class="row g-4 mb-5">
-                <div class="col-auto">
-                    <img src="<?= Url::to('@web/assets/images/avatars/003f.jpg') ?>" onerror="this.src='<?= Url::to('@web/ui-assets/images/pegawai/default.jpg') ?>'" alt="Photo Profile" class="rounded-circle profile-img" style="width: 150px; height: 150px; object-fit: cover; margin-top: -75px; border: 4px solid white;">
-                    <div style="width: 150px;"></div>
+                <div class="col-auto text-center">
+                    <img src="<?= $fotoProfil ?>" alt="Photo Profile" class="rounded-circle profile-img bg-white" style="width: 150px; height: 150px; object-fit: cover; margin-top: -75px; border: 4px solid white;">
+
+                    <div class="mt-3">
+                        <label for="upload-foto" class="btn btn-sm btn-outline-primary rounded-pill">
+                            <i class="bi bi-camera me-1"></i> Ubah Foto
+                        </label>
+                        <input type="file" id="upload-foto" class="d-none" accept="image/*">
+                    </div>
                 </div>
                 <div class="col">
                     <h2 class="mb-1"><?= Html::encode($user->nama ?: $user->username) ?></h2>
@@ -24,6 +35,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Profile'];
                     </div>
                 </div>
             </div>
+
             <div class="row mb-3">
                 <div class="col-md-4">
                     <label for="input-name" class="form-label">Name</label>
