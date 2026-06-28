@@ -84,7 +84,7 @@ $isLog = strpos($route, 'log/') === 0;
             <div class="container-fluid px-0 justify-content-start">
                 <h1 class="navbar-brand text-white ms-3 ms-lg-0 gap-3">
                     <div class="logo">
-                        <img src="<?= Url::to('@web/assets/images/logo_jmc.png') ?>" alt="" height="15">
+                        <img src="<?= Url::to('@web/ui-assets/images/logo_jmc.png') ?>" alt="" height="15">
                     </div>
                     <a href="<?= Url::home() ?>" class="fw-bold hstack gap-3 text-decoration-none">
                         <div style="font-size: .9rem;">Aplikasi Kepegawaian</div>
