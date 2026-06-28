@@ -123,7 +123,7 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
 
         <div class="col-lg-6 d-flex flex-column gap-3">
-            <div class="card shadow-sm border-0">
+            <div class="card shadow-sm h-100 border-0">
                 <div class="card-header border-bottom-0">
                     <h3 class="card-title fw-bold">Alamat Pegawai</h3>
                 </div>
@@ -216,11 +216,9 @@ document.addEventListener("DOMContentLoaded", function() {
             const data = res.data.find(item => item.id == idPegawai);
 
             if(data) {
-                // LOGIKA MENAMPILKAN FOTO REAL DARI SERVER
                 const fotoReal = data.foto_pegawai ? '<?= Url::to('@web/uploads/pegawai/') ?>' + data.foto_pegawai : '<?= Url::to('@web/ui-assets/images/pegawai/default.jpg') ?>';
                 document.getElementById('det-foto').src = fotoReal;
 
-                // Mapping Data Diri
                 document.getElementById('det-nip').innerText = data.nip;
                 document.getElementById('det-nama').innerText = data.nama_pegawai;
                 document.getElementById('det-email').innerText = data.email || '-';
@@ -256,10 +254,6 @@ document.addEventListener("DOMContentLoaded", function() {
                     });
                 } else {
                     pendContainer.innerHTML = '<div class="datagrid-content text-muted">Tidak ada riwayat pendidikan.</div>';
-                }
-
-                if (urlParams.get('autoPrint') === 'true') {
-                    setTimeout(() => window.print(), 800); // Jeda 800ms agar foto ter-load sempurna
                 }
 
             } else {

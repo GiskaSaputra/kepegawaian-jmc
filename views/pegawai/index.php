@@ -5,7 +5,6 @@ use yii\helpers\Url;
 $this->title = 'Data Pegawai';
 $this->params['breadcrumbs'][] = $this->title;
 
-// Ambil Role ID user yang sedang login
 $roleId = Yii::$app->user->identity->id_role;
 ?>
 
@@ -334,7 +333,6 @@ function exportBulkPDF() {
     doc.save("Laporan_Data_Pegawai_JMC.pdf");
 }
 
-// --- BARU: FUNGSI EXPORT DATA SATU PEGAWAI (INDIVIDU) TANPA LAYAR PRINT ---
 function exportSinglePDF(id) {
     const item = allPegawaiData.find(p => p.id == id);
     if (!item) return alert("Data pegawai tidak ditemukan!");
@@ -342,17 +340,14 @@ function exportSinglePDF(id) {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF('p', 'mm', 'a4');
 
-    // Header Dokumen
     doc.setFontSize(16);
     doc.text("Detail Biodata Pegawai JMC", 14, 15);
     doc.setFontSize(10);
     doc.text("Tanggal Cetak: " + new Date().toLocaleDateString('id-ID'), 14, 22);
 
-    // Hitung Masa Kerja
     const tglMasuk = new Date(item.tanggal_masuk);
     const masaKerja = (new Date().getFullYear() - tglMasuk.getFullYear()) + ' tahun';
 
-    // Format Data Menjadi Baris Vertikal (Key-Value)
     const singleDataRecord = [
         ["Nomor Induk Pegawai (NIP)", item.nip],
         ["Nama Lengkap", item.nama_pegawai],
@@ -374,11 +369,10 @@ function exportSinglePDF(id) {
         head: [['Komponen Biodata', 'Keterangan Data']],
         body: singleDataRecord,
         theme: 'grid',
-        headStyles: { fillColor: [43, 80, 142] }, // Menyesuaikan warna tema aplikasi JMC
+        headStyles: { fillColor: [43, 80, 142] },
         styles: { cellPadding: 3, fontSize: 10 }
     });
 
-    // Otomatis mengunduh dengan format nama file NIP Pegawai
     doc.save(`Data_Pegawai_${item.nip}.pdf`);
 }
 </script>

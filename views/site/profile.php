@@ -5,7 +5,6 @@ use yii\helpers\Url;
 $this->title = 'Profile';
 $this->params['breadcrumbs'][] = ['label' => 'Profile'];
 
-// Logika dinamis foto
 $fotoProfil = (isset($user->foto) && $user->foto)
     ? Url::to('@web/uploads/profile/' . $user->foto)
     : Url::to('@web/ui-assets/images/pegawai/default.jpg');
@@ -13,7 +12,6 @@ $fotoProfil = (isset($user->foto) && $user->foto)
 
 <div class="container">
 
-    <!-- Flash Messages -->
     <?php if (Yii::$app->session->hasFlash('success')): ?>
         <div class="alert alert-success alert-dismissible fade show" role="alert">
             <?= Yii::$app->session->getFlash('success') ?>
@@ -28,7 +26,6 @@ $fotoProfil = (isset($user->foto) && $user->foto)
         </div>
     <?php endif; ?>
 
-    <!-- FORM UTAMA DITAMBAHKAN DISINI -->
     <form action="<?= Url::to(['site/profile']) ?>" method="POST" enctype="multipart/form-data">
         <input type="hidden" name="<?= Yii::$app->request->csrfParam ?>" value="<?= Yii::$app->request->csrfToken ?>">
 
@@ -45,7 +42,6 @@ $fotoProfil = (isset($user->foto) && $user->foto)
                             <label for="upload-foto" class="btn btn-sm btn-outline-primary rounded-pill">
                                 <i class="bi bi-camera me-1"></i> Ubah Foto
                             </label>
-                            <!-- Input File (Wajib memiliki atribut name="foto" agar ditangkap Controller) -->
                             <input type="file" name="foto" id="upload-foto" class="d-none" accept="image/*" onchange="previewImage(event)">
                         </div>
                     </div>
@@ -60,7 +56,6 @@ $fotoProfil = (isset($user->foto) && $user->foto)
                 <div class="row mb-3">
                     <div class="col-md-4">
                         <label for="input-name" class="form-label">Name</label>
-                        <!-- Atribut 'name' ditambahkan -->
                         <input type="text" name="nama" id="input-name" class="form-control" value="<?= Html::encode($user->nama ?: $user->username) ?>">
                     </div>
 
@@ -71,7 +66,6 @@ $fotoProfil = (isset($user->foto) && $user->foto)
 
                     <div class="col-md-4">
                         <label for="input-birthday" class="form-label">Birthday</label>
-                        <!-- Pastikan kolom DB ada, jika tidak, nilai ini diabaikan oleh controller -->
                         <input type="date" name="tanggal_lahir" id="input-birthday" class="form-control" value="2000-12-31">
                     </div>
                 </div>
@@ -83,7 +77,6 @@ $fotoProfil = (isset($user->foto) && $user->foto)
             </div>
             <div class="card-footer d-flex">
                 <div class="ms-auto">
-                    <!-- Tipe tombol diubah menjadi Submit -->
                     <button type="submit" class="btn btn-primary">Save Changes</button>
                 </div>
             </div>
@@ -91,7 +84,6 @@ $fotoProfil = (isset($user->foto) && $user->foto)
     </form>
 </div>
 
-<!-- Script untuk langsung mengubah tampilan foto saat file dipilih -->
 <script>
 function previewImage(event) {
     var reader = new FileReader();
