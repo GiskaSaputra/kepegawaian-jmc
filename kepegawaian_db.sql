@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jun 28, 2026 at 01:39 PM
+-- Generation Time: Jun 28, 2026 at 07:05 PM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -229,6 +229,25 @@ INSERT INTO `master_wilayah` (`id`, `kecamatan`, `kabupaten`, `provinsi`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `migration`
+--
+
+CREATE TABLE `migration` (
+  `version` varchar(180) NOT NULL,
+  `apply_time` int DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `migration`
+--
+
+INSERT INTO `migration` (`version`, `apply_time`) VALUES
+('m000000_000000_base', 1782672655),
+('m260628_184938_add_foto_column_to_user_table', 1782672673);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `pegawai`
 --
 
@@ -435,6 +454,7 @@ CREATE TABLE `user` (
   `password_hash` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `nama` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `email` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `foto` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `last_session` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `last_login` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -446,12 +466,12 @@ CREATE TABLE `user` (
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`id`, `id_role`, `id_pegawai`, `username`, `password_hash`, `nama`, `email`, `last_session`, `last_login`, `updated_at`, `created_at`, `disabled`) VALUES
-(1, 1, NULL, 'superadmin', '$2y$13$T9i4jdtWRuHwl5IX2sB9W.D.1vwrSORCXa.WpQNDV6ihx59za2sCu', 'Superadmin', 'superadmin@kepegawaian.go.id', NULL, NULL, '2026-06-27 12:32:49', '2026-06-27 12:32:49', 0),
-(2, 2, NULL, 'manager_hrd', '$2y$13$FnIX.lN3sCPm7QWNNxjN0eZEs6JO3LpMwlK8u9jOzGZ9svKPMQBUW', 'Agus Prasetyo', 'agus.prasetyo@kepegawaian.go.id', NULL, NULL, '2026-06-27 12:32:49', '2026-06-27 12:32:49', 0),
-(3, 3, NULL, 'admin_hrd', '$2y$13$P4/nTnvtLSGyehlUSgxuquOdAt0crflrfU.aEs4hlITieknh1j1SC', 'Rina Marlina', 'rina.marlina@kepegawaian.go.id', NULL, NULL, '2026-06-27 12:32:49', '2026-06-27 12:32:49', 0),
-(5, 2, 1, 'ahmadfauzi123', '$2y$13$5VRBiH7hkePl317NFxIyVuwXYBPW.2Q7nsfZMoDAijaWQFIVOELYa', NULL, NULL, NULL, NULL, '2026-06-28 10:33:50', '2026-06-28 05:08:09', 0),
-(6, 2, 6, 'giskasaputra', '$2y$13$9681Z4IzeUKLtiANtjtuau3jV/VpwnF8TfBhSYOK4vzLn2y9JBp4y', NULL, NULL, NULL, NULL, '2026-06-28 12:31:19', '2026-06-28 12:31:19', 0);
+INSERT INTO `user` (`id`, `id_role`, `id_pegawai`, `username`, `password_hash`, `nama`, `email`, `foto`, `last_session`, `last_login`, `updated_at`, `created_at`, `disabled`) VALUES
+(1, 1, NULL, 'superadmin', '$2y$13$T9i4jdtWRuHwl5IX2sB9W.D.1vwrSORCXa.WpQNDV6ihx59za2sCu', 'Superadmin', 'superadmin@kepegawaian.go.id', NULL, NULL, NULL, '2026-06-27 12:32:49', '2026-06-27 12:32:49', 0),
+(2, 2, NULL, 'manager_hrd', '$2y$13$FnIX.lN3sCPm7QWNNxjN0eZEs6JO3LpMwlK8u9jOzGZ9svKPMQBUW', 'Agus Prasetyo', 'agus.prasetyo@kepegawaian.go.id', NULL, NULL, NULL, '2026-06-27 12:32:49', '2026-06-27 12:32:49', 0),
+(3, 3, NULL, 'admin_hrd', '$2y$13$P4/nTnvtLSGyehlUSgxuquOdAt0crflrfU.aEs4hlITieknh1j1SC', 'Rina Marlina', 'rina.marlina@kepegawaian.go.id', NULL, NULL, NULL, '2026-06-27 12:32:49', '2026-06-27 12:32:49', 0),
+(5, 2, 1, 'ahmadfauzi123', '$2y$13$5VRBiH7hkePl317NFxIyVuwXYBPW.2Q7nsfZMoDAijaWQFIVOELYa', NULL, NULL, NULL, NULL, NULL, '2026-06-28 10:33:50', '2026-06-28 05:08:09', 0),
+(6, 2, 6, 'giskasaputra', '$2y$13$9681Z4IzeUKLtiANtjtuau3jV/VpwnF8TfBhSYOK4vzLn2y9JBp4y', NULL, NULL, NULL, NULL, NULL, '2026-06-28 12:31:19', '2026-06-28 12:31:19', 0);
 
 -- --------------------------------------------------------
 
@@ -498,6 +518,12 @@ ALTER TABLE `master_data`
 ALTER TABLE `master_wilayah`
   ADD PRIMARY KEY (`id`),
   ADD KEY `idx_kecamatan` (`kecamatan`);
+
+--
+-- Indexes for table `migration`
+--
+ALTER TABLE `migration`
+  ADD PRIMARY KEY (`version`);
 
 --
 -- Indexes for table `pegawai`
