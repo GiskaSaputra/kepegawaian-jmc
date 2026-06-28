@@ -108,7 +108,7 @@ $roleId = Yii::$app->user->identity->id_role;
 
 <script>
 let allPegawaiData = [];
-let currentFilteredData = []; // Menyimpan data yang sedang tampil untuk diexport
+let currentFilteredData = [];
 const userRoleId = <?= $roleId ?>;
 
 document.addEventListener("DOMContentLoaded", function() {
@@ -159,7 +159,7 @@ function fetchDataPegawai() {
     .then(res => {
         if(res.status === 'success') {
             allPegawaiData = res.data;
-            currentFilteredData = res.data; // Set awal data untuk export
+            currentFilteredData = res.data;
 
             document.getElementById('count-info').innerText = `Menampilkan ${allPegawaiData.length} dari ${allPegawaiData.length} data`;
 
@@ -199,12 +199,10 @@ function renderTable(dataArray) {
         const masaKerja = masaKerjaAngka + ' tahun';
         const namaJabatan = item.jabatan ? item.jabatan.nama : '-';
 
-        // URL dengan autoPrint=true untuk ikon unduh kecil
-        const urlPrintDetail = `<?= Url::to(['pegawai/detail']) ?>?id=${item.id}&autoPrint=true`;
-
+        // Perubahan: Mengarahkan onclick langsung ke fungsi exportSinglePDF() tanpa pindah halaman
         let actionButtons = `
             <a href="<?= Url::to(['pegawai/detail']) ?>?id=${item.id}" class="text-muted text-decoration-none mx-1" title="Detail"><i class="bi bi-file-earmark-text fs-5"></i></a>
-            <a href="${urlPrintDetail}" target="_blank" class="text-muted text-decoration-none mx-1" title="Download PDF"><i class="bi bi-cloud-download fs-5"></i></a>
+            <a href="javascript:void(0)" onclick="exportSinglePDF(${item.id})" class="text-muted text-decoration-none mx-1" title="Download PDF"><i class="bi bi-cloud-download fs-5"></i></a>
         `;
 
         if (userRoleId === 3) {
@@ -285,11 +283,9 @@ function showError(msg) {
     document.getElementById('table-pegawai-body').innerHTML = `<tr><td colspan="8" class="text-center text-danger py-4">${msg}</td></tr>`;
 }
 
-// --- FUNGSI EXPORT EXCEL ---
 function exportExcel() {
     if (currentFilteredData.length === 0) return alert("Tidak ada data untuk diexport!");
 
-    // Mapping data agar kolomnya rapi dan berbahasa Indonesia
     const dataToExport = currentFilteredData.map((item, index) => ({
         "No": index + 1,
         "NIP": item.nip,
@@ -304,24 +300,20 @@ function exportExcel() {
     const worksheet = XLSX.utils.json_to_sheet(dataToExport);
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, "Data Pegawai");
-
     XLSX.writeFile(workbook, "Data_Pegawai_JMC.xlsx");
 }
 
-// --- FUNGSI EXPORT PDF BULK ---
 function exportBulkPDF() {
     if (currentFilteredData.length === 0) return alert("Tidak ada data untuk diexport!");
 
     const { jsPDF } = window.jspdf;
-    const doc = new jsPDF('p', 'mm', 'a4'); // Kertas A4, posisi Portrait
+    const doc = new jsPDF('p', 'mm', 'a4');
 
-    // Header PDF
     doc.setFontSize(16);
     doc.text("Laporan Data Pegawai JMC", 14, 15);
     doc.setFontSize(10);
     doc.text("Dicetak pada: " + new Date().toLocaleDateString('id-ID'), 14, 22);
 
-    // Format Data untuk Tabel jsPDF
     const tableData = currentFilteredData.map((item, index) => [
         index + 1,
         item.nip,
@@ -336,9 +328,57 @@ function exportBulkPDF() {
         head: [['No', 'NIP', 'Nama Lengkap', 'Jabatan', 'Tgl Masuk', 'Status']],
         body: tableData,
         theme: 'striped',
-        headStyles: { fillColor: [43, 80, 142] } // Warna biru tua (mirip tema prototipe)
+        headStyles: { fillColor: [43, 80, 142] }
     });
 
     doc.save("Laporan_Data_Pegawai_JMC.pdf");
+}
+
+// --- BARU: FUNGSI EXPORT DATA SATU PEGAWAI (INDIVIDU) TANPA LAYAR PRINT ---
+function exportSinglePDF(id) {
+    const item = allPegawaiData.find(p => p.id == id);
+    if (!item) return alert("Data pegawai tidak ditemukan!");
+
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF('p', 'mm', 'a4');
+
+    // Header Dokumen
+    doc.setFontSize(16);
+    doc.text("Detail Biodata Pegawai JMC", 14, 15);
+    doc.setFontSize(10);
+    doc.text("Tanggal Cetak: " + new Date().toLocaleDateString('id-ID'), 14, 22);
+
+    // Hitung Masa Kerja
+    const tglMasuk = new Date(item.tanggal_masuk);
+    const masaKerja = (new Date().getFullYear() - tglMasuk.getFullYear()) + ' tahun';
+
+    // Format Data Menjadi Baris Vertikal (Key-Value)
+    const singleDataRecord = [
+        ["Nomor Induk Pegawai (NIP)", item.nip],
+        ["Nama Lengkap", item.nama_pegawai],
+        ["Jabatan Posisi", item.jabatan ? item.jabatan.nama : '-'],
+        ["Departemen / Divisi", item.departemen ? item.departemen.nama : '-'],
+        ["Tanggal Resmi Masuk", item.tanggal_masuk],
+        ["Masa Kerja Efektif", masaKerja],
+        ["Status Kontrak", item.status_kontrak || '-'],
+        ["Status Kepegawaian", item.status || '-'],
+        ["Email Perusahaan / Pribadi", item.email || '-'],
+        ["Nomor HP Aktif", item.nomor_hp || '-'],
+        ["Jenis Kelamin", item.jenis_kelamin || '-'],
+        ["Tempat, Tanggal Lahir", `${item.tempat_lahir || '-'}, ${item.tanggal_lahir || '-'}`],
+        ["Alamat Rumah Tinggal", item.alamat_lengkap || '-']
+    ];
+
+    doc.autoTable({
+        startY: 28,
+        head: [['Komponen Biodata', 'Keterangan Data']],
+        body: singleDataRecord,
+        theme: 'grid',
+        headStyles: { fillColor: [43, 80, 142] }, // Menyesuaikan warna tema aplikasi JMC
+        styles: { cellPadding: 3, fontSize: 10 }
+    });
+
+    // Otomatis mengunduh dengan format nama file NIP Pegawai
+    doc.save(`Data_Pegawai_${item.nip}.pdf`);
 }
 </script>
