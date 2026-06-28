@@ -15,7 +15,7 @@ class AppAsset extends AssetBundle
     ];
 
     public $js = [
-        'ui-vendor/npm-asset/jquery/dist/jquery.min.js',
+        // Pemanggilan jQuery manual dihapus agar tidak bentrok dengan YiiAsset
         'ui-vendor/npm-asset/tabler--core/dist/js/tabler.min.js',
         'ui-assets/scripts/backend.js',
     ];
