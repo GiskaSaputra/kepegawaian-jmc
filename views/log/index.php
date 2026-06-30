@@ -28,9 +28,13 @@ $this->params['breadcrumbs'][] = ['label' => 'Log Aktifitas'];
                 <tbody id="log-table-body">
                     <?php $number = 1; foreach ($logs as $log): ?>
                         <?php
-                            // Membuat string pencarian gabungan dari nama, judul modul, dan isi aksi
                             $namaUser = $log['username'] ?? 'Administrator';
                             $searchString = strtolower($namaUser . ' ' . $log['title'] . ' ' . $log['content']);
+
+                            $timestamp = '-';
+                            if (!empty($log['created_at'])) {
+                                $timestamp = date('d M Y, H:i', strtotime($log['created_at'] . ' +7 hours')) . ' WIB';
+                            }
                         ?>
                         <tr class="log-row" data-search="<?= Html::encode($searchString) ?>">
                             <td class="text-muted text-center row-number"><?= $number++ ?></td>
@@ -40,7 +44,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Log Aktifitas'];
                             </td>
                             <td class="text-muted text-wrap" style="max-width: 400px;"><?= Html::encode($log['content']) ?></td>
                             <td class="text-muted text-center">
-                                <?= !empty($log['created_at']) ? date('d M Y, H:i', strtotime($log['created_at'])) : '-' ?>
+                                <?= $timestamp ?>
                             </td>
                         </tr>
                     <?php endforeach; ?>
@@ -68,12 +72,11 @@ document.addEventListener("DOMContentLoaded", function () {
     filterSearch.addEventListener('keyup', function() {
         const searchValue = this.value.toLowerCase();
         const rows = document.querySelectorAll('.log-row');
-        let counter = 1; // Untuk mereset nomor urut saat difilter
+        let counter = 1;
 
         rows.forEach(row => {
             const searchData = row.getAttribute('data-search');
 
-            // Jika teks yang dicari cocok dengan data di baris tersebut
             if (searchData.includes(searchValue)) {
                 row.style.display = '';
                 row.querySelector('.row-number').innerText = counter++;
